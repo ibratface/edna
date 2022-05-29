@@ -1,0 +1,43 @@
+version: "3"
+services:
+  dev:
+    image: node:14-buster-slim
+    container_name: edna_api_dev
+    ports:
+      - "8000:4000"
+    networks:
+      - edna_network
+    env_file:
+      - .env.local
+    volumes:
+      - ./api:/home/node/app
+    working_dir: /home/node/app
+    command: /bin/sh -c "npm run start:dev"
+    depends_on:
+      - localstack
+    profiles:
+      - dev
+
+  localstack:
+    image: localstack/localstack
+    container_name: edna_localstack
+    ports:
+      - "4567-4584:4567-4584"
+      - "8055:8080"
+    networks:
+      - edna_network
+    env_file:
+      - .env.local
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - ./localstack/data:/tmp/localstack/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - './localstack/init.sh:/docker-entrypoint-initaws.d/init.sh'      
+    profiles:
+      - dev
+      
+networks:
+    edna_network:
