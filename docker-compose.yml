@@ -1,16 +1,17 @@
 version: "3"
 services:
-  dev:
+  api:
     image: node:14-buster-slim
     container_name: edna_api_dev
     ports:
-      - "8000:4000"
+      - "3000:3000"
     networks:
       - edna_network
     env_file:
       - .env.local
     volumes:
       - ./api:/home/node/app
+      - '.env.local:/home/node/app/.env'
     working_dir: /home/node/app
     command: /bin/sh -c "npm run start:dev"
     depends_on:
