@@ -7,11 +7,11 @@ describe('AppGuard', () => {
   let appGuard: AppGuard;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      providers: [ConfigService],
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [AppGuard, ConfigService],
     }).compile();
 
-    appGuard = app.get<AppGuard>(AppGuard);
+    appGuard = module.get<AppGuard>(AppGuard);
   });
 
 
