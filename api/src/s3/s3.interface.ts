@@ -18,8 +18,8 @@ export interface S3ListObjectsOptions {
 
 export interface S3ListObjectsResponse {
   contents: S3Object[]
-  isTruncated: boolean
-  keyCount: number
-  maxKeys: number
-  nextContinuationToken: string
+  isTruncated?: boolean
+  keyCount?: number
+  maxKeys?: number
+  nextContinuationToken?: string
 }

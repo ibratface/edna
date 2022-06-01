@@ -26,14 +26,9 @@ Swagger docs available at: http://localhost:3000/api
 
 ## Tech Stack
 
-- NestJS
-- Localstack
+![Tech Stack](./docs/techstack.png)
 
-## Logical Architecture
-
-![Logical Architecture](./docs/architecture.png)
-
-## Deployment Infrastructure
+## Deployment infrastructure
 
 ![Deployment](./docs/deployment.png)
 
@@ -58,5 +53,5 @@ All endpoint implementations are stateless and fast allowing for zero downtime b
 ## Potential feature enhancements
 
 - Async upload confirmation / error handling
-- Thumbnail / Preview support
-- Multipart upload for large objects
+- Thumbnail / Preview generation
+- Multipart upload for large files

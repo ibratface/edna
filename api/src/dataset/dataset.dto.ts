@@ -1,11 +1,47 @@
-export interface CreateDatasetDto {
+import { ApiProperty } from "@nestjs/swagger"
+import { S3Bucket, S3Object } from "src/s3/s3.interface"
+
+export class CreateDatasetDto {
+  @ApiProperty()
   name: string
 }
 
-export interface UploadUrlResponse {
+export class UploadUrlDto {
+  @ApiProperty()
   uploadUrl: string
 }
 
-export interface DownloadUrlResponse {
+export class DownloadUrlDto {
+  @ApiProperty()
   downloadUrl: string
+}
+
+export class DatasetDto implements S3Bucket {
+  @ApiProperty()
+  createdOn: Date
+
+  @ApiProperty()
+  name: string
+}
+
+export class DataDto implements S3Object {
+  @ApiProperty()
+  key: string
+
+  @ApiProperty()
+  sizeBytes: number
+
+  @ApiProperty()
+  modifiedOn: Date
+}
+
+export class DatasubsetDto {
+  @ApiProperty()
+  entries: DataDto[]
+
+  @ApiProperty()
+  hasMore?: boolean
+  
+  @ApiProperty()
+  marker?: string
 }

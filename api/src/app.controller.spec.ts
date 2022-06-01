@@ -14,8 +14,4 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('', () => {
-    });
-  });
 });
