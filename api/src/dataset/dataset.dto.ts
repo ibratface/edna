@@ -8,36 +8,36 @@ export class CreateDatasetDto {
 
 export class DatasetDto implements S3Bucket {
   @ApiProperty()
-  createdOn: Date
-
-  @ApiProperty()
   name: string
+
+  @ApiProperty({ required: false })
+  createdOn: Date
 }
 
 export class DataDto implements S3Object {
   @ApiProperty()
   key: string
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   sizeBytes?: number
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   modifiedOn?: Date
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   uploadUrl?: string
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   downloadUrl?: string
 }
 
 export class DatasubsetDto {
-  @ApiProperty()
+  @ApiProperty({ type: DataDto, isArray: true })
   entries: DataDto[]
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   hasMore?: boolean
   
-  @ApiProperty()
+  @ApiProperty({ required: false })
   marker?: string
 }

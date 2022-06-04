@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Options, Param, Post, Query, UseIntercep
 import { S3Service } from '../s3/s3.service';
 import { CreateDatasetDto, DatasetDto, DataDto, DatasubsetDto } from './dataset.dto';
 import { nanoid } from 'nanoid'
-import { ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam } from '@nestjs/swagger';
+import { ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { DatasetErrorInterceptor } from './dataset.error.interceptor';
 
 
@@ -41,9 +41,11 @@ export class DatasetController {
 
   @Get(':datasetId/data')
   @ApiOperation({ description: 'List available data of an existing dataset.' })
+  @ApiQuery({ name: 'marker', description: 'Marker begin listing for pagination', required: false })
+  @ApiQuery({ name: 'limit', description: 'Maximum number of data objects to return', required: false })
   @ApiOkResponse({ type: DatasubsetDto, description: 'All or a subset of the available data in the dataset.' })
   @ApiNotFoundResponse({ description: 'Dataset not found.' })
-  async listData(@Param('datasetId') datasetId: string, @Query('market') marker, @Query('limit') limit): Promise<DatasubsetDto> {
+  async listData(@Param('datasetId') datasetId: string, @Query('marker') marker, @Query('limit') limit): Promise<DatasubsetDto> {
     const res = await this.s3.listObjects(datasetId, { continuationToken: marker, maxKeys: limit })
     return {
       entries: res.contents ?? [],
