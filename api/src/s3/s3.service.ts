@@ -53,7 +53,7 @@ export class S3Service {
   async listBuckets(): Promise<S3Bucket[]> {
     const cmd = new ListBucketsCommand({})
     const res = await this.client.send(cmd)
-    return res.Buckets ? res.Buckets.map((b): S3Bucket => ({ createdOn: b.CreationDate, name: b.Name })) : [];
+    return res?.Buckets ? res.Buckets.map((b): S3Bucket => ({ createdOn: b.CreationDate, name: b.Name })) : [];
   }
 
   // Objects
@@ -89,14 +89,14 @@ export class S3Service {
       MaxKeys: options.maxKeys,
       ContinuationToken: options.continuationToken
     })
-    const { Contents, IsTruncated, KeyCount, MaxKeys, NextContinuationToken } = await this.client.send(cmd)
-    const contents = Contents?.map((o): S3Object => ({ key: o.Key, sizeBytes: o.Size, modifiedOn: o.LastModified })) ?? []
+    const res = await this.client.send(cmd)
+    const contents = res?.Contents ? res.Contents.map((o): S3Object => ({ key: o.Key, sizeBytes: o.Size, modifiedOn: o.LastModified })) : []
     return {
       contents,
-      isTruncated: IsTruncated,
-      keyCount: KeyCount,
-      maxKeys: MaxKeys,
-      nextContinuationToken: NextContinuationToken
+      isTruncated: res?.IsTruncated,
+      keyCount: res?.KeyCount,
+      maxKeys: res?.MaxKeys,
+      nextContinuationToken: res?.NextContinuationToken
     }
   }
 
