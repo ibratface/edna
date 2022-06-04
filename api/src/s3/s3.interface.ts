@@ -5,8 +5,8 @@ export interface S3Bucket {
 
 export interface S3Object {
   key: string
-  sizeBytes: number
-  modifiedOn: Date
+  sizeBytes?: number
+  modifiedOn?: Date
 }
 
 export interface S3ListObjectsOptions {

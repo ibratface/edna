@@ -1,10 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import {
   S3Client,
-  GetObjectCommand, PutObjectCommand, DeleteObjectCommand, DeleteBucketCommand,
-  CreateBucketCommand, GetObjectTaggingCommand,
-  PutObjectTaggingCommand, DeleteObjectTaggingCommand,
-  ListBucketsCommand, ListObjectsV2Command, HeadBucketCommand, HeadObjectCommand
+  GetObjectCommand,
+  PutObjectCommand,
+  DeleteObjectCommand,
+  DeleteBucketCommand,
+  CreateBucketCommand,
+  GetObjectTaggingCommand,
+  PutObjectTaggingCommand,
+  DeleteObjectTaggingCommand,
+  ListBucketsCommand,
+  ListObjectsV2Command,
+  HeadBucketCommand,
+  HeadObjectCommand
 } from "@aws-sdk/client-s3";
 import { ConfigService } from '@nestjs/config';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
@@ -82,7 +90,7 @@ export class S3Service {
       ContinuationToken: options.continuationToken
     })
     const { Contents, IsTruncated, KeyCount, MaxKeys, NextContinuationToken } = await this.client.send(cmd)
-    const contents = Contents.map((o): S3Object => ({ key: o.Key, sizeBytes: o.Size, modifiedOn: o.LastModified }))
+    const contents = Contents?.map((o): S3Object => ({ key: o.Key, sizeBytes: o.Size, modifiedOn: o.LastModified })) ?? []
     return {
       contents,
       isTruncated: IsTruncated,

@@ -21,6 +21,7 @@ describe('S3Service', () => {
     expect(service).toBeDefined();
   });
 
+
   describe('listBuckets', () => {
     it('should return a list of buckets', async () => {
       const result: S3Bucket = {
@@ -37,6 +38,7 @@ describe('S3Service', () => {
     })
   })
 
+  
   const kvpairs = [{ Key: 'a', Value: 'b' }, { Key: 'c', Value: 'd' }]
   const labelobj = { a: 'b', c: 'd' }
 

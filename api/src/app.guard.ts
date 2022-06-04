@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { defaultIfEmpty, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AppGuard implements CanActivate {
@@ -15,6 +15,7 @@ export class AppGuard implements CanActivate {
     const defaultToken = this.config.get<string>('APP_TOKEN')
     const nodeEnv = this.config.get<string>('NODE_ENV')
     
+    // TODO: Replace with JWT check
     return nodeEnv === 'dev' || req.headers?.authorization === `Bearer ${defaultToken}`
   }
 }

@@ -6,16 +6,6 @@ export class CreateDatasetDto {
   name: string
 }
 
-export class UploadUrlDto {
-  @ApiProperty()
-  uploadUrl: string
-}
-
-export class DownloadUrlDto {
-  @ApiProperty()
-  downloadUrl: string
-}
-
 export class DatasetDto implements S3Bucket {
   @ApiProperty()
   createdOn: Date
@@ -29,10 +19,16 @@ export class DataDto implements S3Object {
   key: string
 
   @ApiProperty()
-  sizeBytes: number
+  sizeBytes?: number
 
   @ApiProperty()
-  modifiedOn: Date
+  modifiedOn?: Date
+
+  @ApiProperty()
+  uploadUrl?: string
+
+  @ApiProperty()
+  downloadUrl?: string
 }
 
 export class DatasubsetDto {
