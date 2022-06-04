@@ -58,9 +58,10 @@ describe('DatasetController (e2e)', () => {
 
       // request a key and presigned url
       postres = await request(app.getHttpServer())
-        .options(`/dataset/${datasetId}/data`)
+        .post(`/dataset/${datasetId}/data`)
+        .send()
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(201)
       expect(postres.body).toStrictEqual<DataDto>(expect.objectContaining({
         key: expect.any(String),
         uploadUrl: expect.stringMatching(REGEXP_URL)

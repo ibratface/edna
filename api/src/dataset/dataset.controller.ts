@@ -53,7 +53,7 @@ export class DatasetController {
   }
 
 
-  @Options(':datasetId/data')
+  @Post(':datasetId/data')
   @ApiOperation({ description: 'Get a new key and URL for uploading a new data object' })
   @ApiOkResponse({ type: DataDto, description: 'A key and presigned URL for upload' })
   @ApiNotFoundResponse({ description: 'Dataset not found.' })
