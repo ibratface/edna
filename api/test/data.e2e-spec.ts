@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { createReadStream, readFileSync, statSync } from "fs";
 import * as crypto from 'crypto';
-import { DataDto } from 'src/dataset/dataset.dto';
+import { DataDto, DatasubsetDto } from 'src/dataset/dataset.dto';
 
 
 const REGEXP_URL = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
@@ -41,12 +41,14 @@ describe('DatasetController (e2e)', () => {
       .expect(200)
   })
 
-  describe('/dataset/:datasetId/data (GET)', () => {
+  describe('/dataset/:datasetId/data (GET) on a new empty dataset', () => {
     it('should return empty', async () => {
       const res = await request(app.getHttpServer())
         .get(`/dataset/${datasetId}/data`)
         .set('Accept', 'application/json')
-      expect(res.body.entries?.length).toBe(0)
+      
+      expect(res.status).toBe(200)
+      expect(res.body?.entries?.length).toBe(0)
     })
   })
 
@@ -82,12 +84,28 @@ describe('DatasetController (e2e)', () => {
     })
   })
 
-  describe('/dataset/:datasetId/data/:dataId (OPTIONS)', () => {
+  describe('/dataset/:datasetId/data (GET) on a dataset with data', () => {
+    it('should return the object uploaded in the list', async () => {
+      const res = await request(app.getHttpServer())
+        .get(`/dataset/${datasetId}/data`)
+        .set('Accept', 'application/json')
+
+      expect(res.status).toBe(200)
+      
+      const payload: DatasubsetDto = res.body
+      expect(payload?.entries?.length).toBeGreaterThan(0)
+      expect(payload?.entries).toContainEqual<DataDto>(expect.objectContaining({
+        key: dataId
+      }))
+      expect(payload?.hasMore).toBe(false) // just 1
+      expect(payload?.marker).toBe(undefined)
+    })
+  })
+
+  describe('/dataset/:datasetId/data/:dataId (GET)', () => {
     let getres;
 
     it('should return a valid download url and key', async () => {
-      jest.setTimeout(20000)
-
       // request a key and presigned url
       getres = await request(app.getHttpServer())
         .get(`/dataset/${datasetId}/data/${dataId}`)
