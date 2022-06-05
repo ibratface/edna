@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Observable } from 'rxjs';
+import { Observable, skip } from 'rxjs';
 
 @Injectable()
 export class AppGuard implements CanActivate {
@@ -13,9 +13,9 @@ export class AppGuard implements CanActivate {
     const req = context.switchToHttp().getRequest()
 
     const defaultToken = this.config.get<string>('APP_TOKEN')
-    const nodeEnv = this.config.get<string>('NODE_ENV')
-    
+    const skipAuth = this.config.get('SKIP_AUTH')
+
     // TODO: Replace with JWT check
-    return nodeEnv === 'dev' || req.headers?.authorization === `Bearer ${defaultToken}`
+    return skipAuth ?? req.headers?.authorization === `Bearer ${defaultToken}`
   }
 }
