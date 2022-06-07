@@ -2,6 +2,8 @@
 
 Training dataset management API
 
+![No capes!](./docs/edna.webp)
+
 ## Features
 
 - Data upload/download/delete
@@ -82,4 +84,3 @@ All endpoint implementations are stateless and fast allowing for zero downtime b
 - Thumbnail / Preview generation
 - Multipart upload for large files
 
-![No capes!](./docs/edna.webp)
