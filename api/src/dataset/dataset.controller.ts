@@ -4,9 +4,11 @@ import { CreateDatasetDto, DatasetDto, DataDto, DatasubsetDto } from './dataset.
 import { nanoid } from 'nanoid'
 import { ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { DatasetErrorInterceptor } from './dataset.error.interceptor';
+import { AppLoggingInterceptor } from 'src/app.logging.interceptor';
 
 
 @Controller('dataset')
+@UseInterceptors(AppLoggingInterceptor)
 @UseInterceptors(DatasetErrorInterceptor)
 export class DatasetController {
 
