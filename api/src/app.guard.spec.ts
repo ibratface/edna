@@ -39,7 +39,13 @@ describe('AppGuard', () => {
 
   it('should return false with anything else', () => {
     const context = createMock<ExecutionContext>();
-    expect(appGuard.canActivate(context)).toBeFalsy();
+    const canActivate = expect(appGuard.canActivate(context))
+    if (config.get('SKIP_AUTH')) {
+      canActivate.toBeTruthy(); // always truthy is skip auth flag is on
+    }
+    else {
+      canActivate.toBeFalsy();
+    }
   })
 
 });
