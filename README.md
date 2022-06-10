@@ -13,6 +13,16 @@ Training dataset management API
 
 - Docker
 - docker-compose
+- npm
+
+## Setup
+
+Install npm dependencies
+
+```
+$ cd api
+$ npm install
+```
 
 ## Running the application
 
@@ -27,6 +37,12 @@ Navigate your browser to: http://localhost:3000/
 Swagger docs available at: http://localhost:3000/api
 
 ## Running tests
+
+Start localstack:
+
+```
+docker-compose up -d localstack
+```
 
 ### Unit tests
 
