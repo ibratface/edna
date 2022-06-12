@@ -34,29 +34,31 @@ Navigate your browser to: http://localhost:3000/
 
 ## Swagger documentation
 
-Swagger docs available at: http://localhost:3000/api
+When the app is running, Swagger docs will be available at: http://localhost:3000/api
 
 ## Running tests
 
-Start localstack:
+Testing is automated on push via [Github Actions](https://github.com/ibratface/edna/actions).
 
-```
-docker-compose up -d localstack
-```
+To run tests locally:
 
-### Unit tests
+- Start localstack
 
-```
-$ docker-compose run api npm run test
-```
+  ```
+  $ docker-compose up -d localstack
+  ```
 
-### End-to-end tests
+- Run unit tests
 
-```
-$ docker-compose up api npm run test:e2e
-```
+  ```
+  $ docker-compose run api npm run test
+  ```
 
-*Requires localstack to be up
+- Run end-to-end tests
+
+  ```
+  $ docker-compose run api npm run test:e2e
+  ```
 
 ## Tech Stack
 
