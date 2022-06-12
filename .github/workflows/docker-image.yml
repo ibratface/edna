@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run localstack
+      run: docker-compose up -d localstack
+    - uses: actions/setup-node@v3
+    - name: Install dependencies
+    - run: cd api
+    - run: npm install
+    - name: Run unit tests
+    - run: docker-compose run api npm run test
+    - name: Run e2e tests
+    - run: docker-compose run api npm run test:e2e
