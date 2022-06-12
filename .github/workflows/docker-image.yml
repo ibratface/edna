@@ -18,9 +18,9 @@ jobs:
       run: docker-compose up -d localstack
     - uses: actions/setup-node@v3
     - name: Install dependencies
-    - run: cd api
+      run: cd api
     - run: npm install
     - name: Run unit tests
-    - run: docker-compose run api npm run test
+      run: docker-compose run api npm run test
     - name: Run e2e tests
-    - run: docker-compose run api npm run test:e2e
+      run: docker-compose run api npm run test:e2e
